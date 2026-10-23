@@ -1,0 +1,10 @@
+# LibreLane output (large)
+pnr/runs/
+# simulation build outputs
+sim
+sim_err
+gls
+*.vcd
+*.log
+# keep the captured run logs
+!logs/*.log
