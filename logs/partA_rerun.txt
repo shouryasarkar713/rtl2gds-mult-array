@@ -1,0 +1,6 @@
+# RTL simulation re-run
+# Command: iverilog -g2012 -o sim tb/tb_mult.v rtl/full_adder.v rtl/mult_array.v && vvp sim
+Icarus Verilog version 12.0 (stable) ()
+VCD info: dumpfile mult.vcd opened for output.
+PASS: 256 vectors checked, 0 errors
+tb/tb_mult.v:91: $finish called at 5138000 (1ps)
