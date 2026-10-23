@@ -1,0 +1,16 @@
+Repeat run of the final LibreLane attempt (CLOCK_PERIOD = 7.0 ns)
+Date: 2026-10-22 19:20 UTC  |  Flow wall time: 78 s
+
+The 17 signoff metrics below match the final run.
+
+Signoff summary from the flow log: Antenna PASSED, LVS PASSED, DRC PASSED.
+Warnings: max-slew violations 11 in ss_100C_1v60 corners (min/nom/max), 0 in tt/ff;
+446 lint warnings; SDC fallback notice. flow__errors__count = 0.
+
+Final-netlist cell histogram (4821 instances):
+  4197 decap_3, 215 fill_1, 63 fill_2, 245 tapvpwrvgnd_1, 16 dfrtp_2,
+  20 clkdlybuf4s25_1, 3 clkbuf_16, 2 inv_2, 60 combinational gates (drive-strength _2).
+  Std cells incl. taps: 346 = 101 non-tap + 245 tap. Fill/decap: 4475. Total: 4821.
+
+Resizer slew repair during the flow: 'Found 1 slew violation ... Inserted 3 buffers in 2 nets'.
+Core utilization (stdcell area / core area): 1579.01 / 17759.5 = 8.89% (design__instance__utilization = 0.0889108).

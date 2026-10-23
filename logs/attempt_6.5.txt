@@ -1,0 +1,11 @@
+T = 6.5 ns   run = RUN_2026-10-22_17-12-09
+  setup__ws (worst, all corners) = -0.1277884501052991
+  setup__ws tt (nom_tt_025C_1v80) = 3.073754227035508
+  setup__ws ss (max_ss_100C_1v60) = -0.1277884501052991
+  setup_vio__count = 4
+  route__drc_errors = 0
+  magic__drc_error__count = 0
+  klayout__drc_error__count = 0
+  lvs_error__count = 0
+  instance__count = 4820
+  wirelength = 3029
