@@ -1,10 +1,12 @@
-# LibreLane output (large)
+# LibreLane runs are large and must not be committed (assignment Section 9)
 pnr/runs/
-# simulation build outputs
+# simulation build artifacts
 sim
 sim_err
 gls
 *.vcd
+!mult.vcd
 *.log
-# keep the captured run logs
+# deliberate exception: run evidence under logs/ IS committed
 !logs/*.log
+!logs/baseline_historical_oct22/*.log

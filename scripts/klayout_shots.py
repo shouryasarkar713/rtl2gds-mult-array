@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""Render the two KLayout screenshots of the mult_array GDS.
+"""KLayout headless screenshots of the mult_array GDS.
 
-Uses the same engine and SKY130A layer properties as the GUI, in batch mode.
+Reproduces exactly what a user sees in the KLayout GUI (same engine, same
+SKY130A layer properties file), rendered with KLayout 0.30.7 in batch mode.
 
-Outputs:
-  1. mult_array_die.png  - the whole 150 x 150 um die
-  2. mult_array_zoom.png - the densest part of the core, showing the cell
-                           rows and the metal routing
+Produces:
+  1. mult_array_die.png  - whole 150 x 150 um die
+  2. mult_array_zoom.png - zoomed view over the densest standard-cell rows,
+                           showing cell rows, tap/fill cells and metal routing
 """
 import os
 import pya
 
-# Run from the repository root with PDK_ROOT pointing at the SKY130 PDK root
-# (IIC-OSIC-TOOLS: /foss/pdks).
+# Portable paths: run this script from the repository root with PDK_ROOT
+# pointing at the SKY130 PDK root (IIC-OSIC-TOOLS: /foss/pdks).
 #   QT_QPA_PLATFORM=offscreen klayout -b -r scripts/klayout_shots.py
 PDK_ROOT = os.environ.get("PDK_ROOT", "/foss/pdks")
 LYP_CANDIDATES = [

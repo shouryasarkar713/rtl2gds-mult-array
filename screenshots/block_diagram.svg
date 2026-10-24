@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1400" viewBox="0 0 1560 1400">
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7"
+     markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker>
+   <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7"
+     markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#92400e"/></marker>
+   <marker id="arrV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7"
+     markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/></marker></defs>
+<rect width="1560" height="1400" fill="#FFFFFF"/>
+<text x="780.0" y="52" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="46" fill="#111827" text-anchor="middle" font-weight="bold">4-bit × 4-bit Unsigned Array Multiplier — mult_array</text>
+<text x="780.0" y="100" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="28" fill="#374151" text-anchor="middle" font-weight="normal">16 AND gates · 12 full adders · 16 flip-flops (a_reg, b_reg, p) · 2-cycle latency</text>
+<text x="40" y="152" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#1f2937" text-anchor="start" font-weight="bold">a[3:0]</text>
+<circle cx="132" cy="144" r="6" fill="#1f2937"/>
+<line x1="138" y1="144" x2="150" y2="144" stroke="#334155" stroke-width="2.0" marker-end="url(#arr)"/>
+<text x="40" y="224" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#1f2937" text-anchor="start" font-weight="bold">b[3:0]</text>
+<circle cx="132" cy="216" r="6" fill="#1f2937"/>
+<line x1="138" y1="216" x2="150" y2="216" stroke="#334155" stroke-width="2.0" marker-end="url(#arr)"/>
+<rect x="152" y="114" width="170" height="62" rx="7" fill="#FFF7ED" stroke="#D97706" stroke-width="2.4"/>
+<text x="237.0" y="137.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#7c2d12" text-anchor="middle" font-weight="bold">a_reg[3:0]</text>
+<text x="237.0" y="163.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="19" fill="#92400e" text-anchor="middle" font-weight="normal">4-bit DFF</text>
+<rect x="152" y="186" width="170" height="62" rx="7" fill="#FFF7ED" stroke="#D97706" stroke-width="2.4"/>
+<text x="237.0" y="209.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#7c2d12" text-anchor="middle" font-weight="bold">b_reg[3:0]</text>
+<text x="237.0" y="235.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="19" fill="#92400e" text-anchor="middle" font-weight="normal">4-bit DFF</text>
+<text x="46" y="268" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="17" fill="#6b7280" text-anchor="start" font-weight="normal">clk, rst_n (async, active-low)</text>
+<line x1="322" y1="145" x2="372" y2="145" stroke="#475569" stroke-width="3.4" marker-end="url(#arr)"/>
+<text x="378" y="140" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="20" fill="#334155" text-anchor="start" font-weight="bold">a_reg[3:0]</text>
+<line x1="322" y1="217" x2="352" y2="217" stroke="#7c3aed" stroke-width="2.6"/>
+<line x1="352" y1="217" x2="352" y2="866" stroke="#7c3aed" stroke-width="2.6"/>
+<text x="362" y="272" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="22" fill="#7c3aed" text-anchor="start" font-weight="bold">b_reg[i] → row i</text>
+<path d="M 352,338 L 388,338 A 11 11 0 0 1 410,338 L 506,338 A 11 11 0 0 1 528,338 L 624,338 A 11 11 0 0 1 646,338 L 742,338 A 11 11 0 0 1 764,338 L 715,338" stroke="#7c3aed" stroke-width="2.4" fill="none" marker-end="url(#arrV)"/>
+<path d="M 352,514 L 374,514 A 11 11 0 0 1 396,514 L 506,514 A 11 11 0 0 1 528,514 L 624,514 A 11 11 0 0 1 646,514 L 742,514 A 11 11 0 0 1 764,514 L 860,514 A 11 11 0 0 1 882,514 L 833,514" stroke="#7c3aed" stroke-width="2.4" fill="none" marker-end="url(#arrV)"/>
+<path d="M 352,690 L 374,690 A 11 11 0 0 1 396,690 L 492,690 A 11 11 0 0 1 514,690 L 624,690 A 11 11 0 0 1 646,690 L 742,690 A 11 11 0 0 1 764,690 L 860,690 A 11 11 0 0 1 882,690 L 978,690 A 11 11 0 0 1 1000,690 L 951,690" stroke="#7c3aed" stroke-width="2.4" fill="none" marker-end="url(#arrV)"/>
+<path d="M 352,866 L 374,866 A 11 11 0 0 1 396,866 L 492,866 A 11 11 0 0 1 514,866 L 610,866 A 11 11 0 0 1 632,866 L 742,866 A 11 11 0 0 1 764,866 L 860,866 A 11 11 0 0 1 882,866 L 978,866 A 11 11 0 0 1 1000,866 L 1096,866 A 11 11 0 0 1 1118,866 L 1069,866" stroke="#7c3aed" stroke-width="2.4" fill="none" marker-end="url(#arrV)"/>
+<text x="46" y="310" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#64748b" text-anchor="start" font-weight="normal">Row 0 (ANDs only)</text>
+<path d="M 343,323 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="331" y1="330" x2="343" y2="330" stroke="#334155" stroke-width="2.0"/>
+<line x1="331" y1="346" x2="343" y2="346" stroke="#334155" stroke-width="2.0"/>
+<line x1="366" y1="312" x2="366" y2="323" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="359" y="304" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp0[0]</text>
+<path d="M 382,338 L 399,338 L 399,1012" stroke="#92400e" stroke-width="2.6" fill="none" marker-end="url(#arrA)"/>
+<path d="M 461,323 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="449" y1="330" x2="461" y2="330" stroke="#334155" stroke-width="2.0"/>
+<line x1="449" y1="346" x2="461" y2="346" stroke="#334155" stroke-width="2.0"/>
+<line x1="484" y1="312" x2="484" y2="323" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="477" y="304" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp0[1]</text>
+<path d="M 500,338 L 517,338 L 517,572" stroke="#0f766e" stroke-width="2.0" fill="none" marker-end="url(#arr)"/>
+<path d="M 579,323 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="567" y1="330" x2="579" y2="330" stroke="#334155" stroke-width="2.0"/>
+<line x1="567" y1="346" x2="579" y2="346" stroke="#334155" stroke-width="2.0"/>
+<line x1="602" y1="312" x2="602" y2="323" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="595" y="304" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp0[2]</text>
+<path d="M 618,338 L 635,338 L 635,572" stroke="#0f766e" stroke-width="2.0" fill="none" marker-end="url(#arr)"/>
+<path d="M 697,323 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="685" y1="330" x2="697" y2="330" stroke="#334155" stroke-width="2.0"/>
+<line x1="685" y1="346" x2="697" y2="346" stroke="#334155" stroke-width="2.0"/>
+<line x1="720" y1="312" x2="720" y2="323" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="713" y="304" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp0[3]</text>
+<path d="M 736,338 L 753,338 L 753,572" stroke="#0f766e" stroke-width="2.0" fill="none" marker-end="url(#arr)"/>
+<text x="46" y="486" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#64748b" text-anchor="start" font-weight="normal">Row 1 (4 AND + 4 FA)</text>
+<path d="M 461,499 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="449" y1="506" x2="461" y2="506" stroke="#334155" stroke-width="2.0"/>
+<line x1="449" y1="522" x2="461" y2="522" stroke="#334155" stroke-width="2.0"/>
+<line x1="484" y1="488" x2="484" y2="499" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="477" y="480" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp1[0]</text>
+<rect x="468" y="572" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="503" y="607" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA10</text>
+<line x1="484" y1="529" x2="484" y2="572" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="451" y1="598" x2="466" y2="598" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="441" y="606" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="24" fill="#6b7280" text-anchor="middle" font-weight="bold">0</text>
+<line x1="538" y1="598" x2="584" y2="598" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="517" y1="624" x2="517" y2="748" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<line x1="503" y1="624" x2="503" y2="1012" stroke="#92400e" stroke-width="2.6" marker-end="url(#arr)"/>
+<path d="M 579,499 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="567" y1="506" x2="579" y2="506" stroke="#334155" stroke-width="2.0"/>
+<line x1="567" y1="522" x2="579" y2="522" stroke="#334155" stroke-width="2.0"/>
+<line x1="602" y1="488" x2="602" y2="499" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="595" y="480" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp1[1]</text>
+<rect x="586" y="572" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="621" y="607" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA11</text>
+<line x1="602" y1="529" x2="602" y2="572" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="536" y1="598" x2="584" y2="598" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="656" y1="598" x2="702" y2="598" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="635" y1="624" x2="635" y2="748" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<path d="M 697,499 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="685" y1="506" x2="697" y2="506" stroke="#334155" stroke-width="2.0"/>
+<line x1="685" y1="522" x2="697" y2="522" stroke="#334155" stroke-width="2.0"/>
+<line x1="720" y1="488" x2="720" y2="499" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="713" y="480" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp1[2]</text>
+<rect x="704" y="572" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="739" y="607" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA12</text>
+<line x1="720" y1="529" x2="720" y2="572" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="654" y1="598" x2="702" y2="598" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="774" y1="598" x2="820" y2="598" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="753" y1="624" x2="753" y2="748" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<path d="M 815,499 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="803" y1="506" x2="815" y2="506" stroke="#334155" stroke-width="2.0"/>
+<line x1="803" y1="522" x2="815" y2="522" stroke="#334155" stroke-width="2.0"/>
+<line x1="838" y1="488" x2="838" y2="499" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="831" y="480" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp1[3]</text>
+<rect x="822" y="572" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="857" y="607" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA13</text>
+<line x1="838" y1="529" x2="838" y2="572" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="772" y1="598" x2="820" y2="598" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="892" y1="598" x2="931" y2="598" stroke="#b45309" stroke-width="1.8"/>
+<text x="939" y="606" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="22" fill="#b45309" text-anchor="start" font-weight="normal">c1[4]</text>
+<line x1="871" y1="624" x2="871" y2="748" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<text x="46" y="662" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#64748b" text-anchor="start" font-weight="normal">Row 2 (4 AND + 4 FA)</text>
+<path d="M 579,675 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="567" y1="682" x2="579" y2="682" stroke="#334155" stroke-width="2.0"/>
+<line x1="567" y1="698" x2="579" y2="698" stroke="#334155" stroke-width="2.0"/>
+<line x1="602" y1="664" x2="602" y2="675" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="595" y="656" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp2[0]</text>
+<rect x="586" y="748" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="621" y="783" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA20</text>
+<line x1="602" y1="705" x2="602" y2="748" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="569" y1="774" x2="584" y2="774" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="559" y="782" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="24" fill="#6b7280" text-anchor="middle" font-weight="bold">0</text>
+<line x1="656" y1="774" x2="702" y2="774" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="635" y1="800" x2="635" y2="924" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<line x1="621" y1="800" x2="621" y2="1012" stroke="#92400e" stroke-width="2.6" marker-end="url(#arr)"/>
+<path d="M 697,675 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="685" y1="682" x2="697" y2="682" stroke="#334155" stroke-width="2.0"/>
+<line x1="685" y1="698" x2="697" y2="698" stroke="#334155" stroke-width="2.0"/>
+<line x1="720" y1="664" x2="720" y2="675" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="713" y="656" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp2[1]</text>
+<rect x="704" y="748" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="739" y="783" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA21</text>
+<line x1="720" y1="705" x2="720" y2="748" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="654" y1="774" x2="702" y2="774" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="774" y1="774" x2="820" y2="774" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="753" y1="800" x2="753" y2="924" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<path d="M 815,675 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="803" y1="682" x2="815" y2="682" stroke="#334155" stroke-width="2.0"/>
+<line x1="803" y1="698" x2="815" y2="698" stroke="#334155" stroke-width="2.0"/>
+<line x1="838" y1="664" x2="838" y2="675" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="831" y="656" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp2[2]</text>
+<rect x="822" y="748" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="857" y="783" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA22</text>
+<line x1="838" y1="705" x2="838" y2="748" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="772" y1="774" x2="820" y2="774" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="892" y1="774" x2="938" y2="774" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="871" y1="800" x2="871" y2="924" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<path d="M 933,675 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="921" y1="682" x2="933" y2="682" stroke="#334155" stroke-width="2.0"/>
+<line x1="921" y1="698" x2="933" y2="698" stroke="#334155" stroke-width="2.0"/>
+<line x1="956" y1="664" x2="956" y2="675" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="949" y="656" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp2[3]</text>
+<rect x="940" y="748" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="975" y="783" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA23</text>
+<line x1="956" y1="705" x2="956" y2="748" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="890" y1="774" x2="938" y2="774" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="1010" y1="774" x2="1049" y2="774" stroke="#b45309" stroke-width="1.8"/>
+<text x="1057" y="782" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="22" fill="#b45309" text-anchor="start" font-weight="normal">c2[4]</text>
+<line x1="989" y1="800" x2="989" y2="924" stroke="#0f766e" stroke-width="2.0" marker-end="url(#arr)"/>
+<text x="46" y="838" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#64748b" text-anchor="start" font-weight="normal">Row 3 (4 AND + 4 FA)</text>
+<path d="M 697,851 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="685" y1="858" x2="697" y2="858" stroke="#334155" stroke-width="2.0"/>
+<line x1="685" y1="874" x2="697" y2="874" stroke="#334155" stroke-width="2.0"/>
+<line x1="720" y1="840" x2="720" y2="851" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="713" y="832" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp3[0]</text>
+<rect x="704" y="924" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="739" y="959" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA30</text>
+<line x1="720" y1="881" x2="720" y2="924" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="687" y1="950" x2="702" y2="950" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="677" y="958" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="24" fill="#6b7280" text-anchor="middle" font-weight="bold">0</text>
+<line x1="774" y1="950" x2="820" y2="950" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="739" y1="976" x2="739" y2="1012" stroke="#92400e" stroke-width="2.6" marker-end="url(#arr)"/>
+<path d="M 815,851 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="803" y1="858" x2="815" y2="858" stroke="#334155" stroke-width="2.0"/>
+<line x1="803" y1="874" x2="815" y2="874" stroke="#334155" stroke-width="2.0"/>
+<line x1="838" y1="840" x2="838" y2="851" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="831" y="832" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp3[1]</text>
+<rect x="822" y="924" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="857" y="959" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA31</text>
+<line x1="838" y1="881" x2="838" y2="924" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="772" y1="950" x2="820" y2="950" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="892" y1="950" x2="938" y2="950" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<path d="M 933,851 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="921" y1="858" x2="933" y2="858" stroke="#334155" stroke-width="2.0"/>
+<line x1="921" y1="874" x2="933" y2="874" stroke="#334155" stroke-width="2.0"/>
+<line x1="956" y1="840" x2="956" y2="851" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="949" y="832" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp3[2]</text>
+<rect x="940" y="924" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="975" y="959" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA32</text>
+<line x1="956" y1="881" x2="956" y2="924" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="890" y1="950" x2="938" y2="950" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="1010" y1="950" x2="1056" y2="950" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr)"/>
+<path d="M 1051,851 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="1039" y1="858" x2="1051" y2="858" stroke="#334155" stroke-width="2.0"/>
+<line x1="1039" y1="874" x2="1051" y2="874" stroke="#334155" stroke-width="2.0"/>
+<line x1="1074" y1="840" x2="1074" y2="851" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="1067" y="832" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#1e40af" text-anchor="middle" font-weight="normal">pp3[3]</text>
+<rect x="1058" y="924" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="1093" y="959" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA33</text>
+<line x1="1074" y1="881" x2="1074" y2="924" stroke="#1d4ed8" stroke-width="1.8"/>
+<line x1="1008" y1="950" x2="1056" y2="950" stroke="#334155" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="1128" y1="950" x2="1167" y2="950" stroke="#b45309" stroke-width="1.8"/>
+<text x="1175" y="958" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="22" fill="#b45309" text-anchor="start" font-weight="normal">c3[4]</text>
+<path d="M 1167,950 L 1195,950 L 1195,1012" stroke="#92400e" stroke-width="2.6" fill="none" marker-end="url(#arrA)"/>
+<line x1="385" y1="1022" x2="1227" y2="1022" stroke="#92400e" stroke-width="5" marker-end="url(#arrA)"/>
+<text x="385" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[0]</text>
+<text x="503" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[1]</text>
+<text x="621" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[2]</text>
+<text x="739" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[3]</text>
+<text x="857" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[4]</text>
+<text x="975" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[5]</text>
+<text x="1093" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[6]</text>
+<text x="1211" y="1054" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="23" fill="#92400e" text-anchor="middle" font-weight="bold">p[7]</text>
+<line x1="1227" y1="1022" x2="1254" y2="1022" stroke="#92400e" stroke-width="5" marker-end="url(#arrA)"/>
+<rect x="1259" y="974" width="190" height="96" rx="7" fill="#FFF7ED" stroke="#D97706" stroke-width="2.4"/>
+<text x="1354.0" y="1014.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#7c2d12" text-anchor="middle" font-weight="bold">p[7:0]</text>
+<text x="1354.0" y="1040.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="19" fill="#92400e" text-anchor="middle" font-weight="normal">8-bit DFF</text>
+<text x="1354" y="1096" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="21" fill="#7c2d12" text-anchor="middle" font-weight="bold">p[7:0]  (registered product)</text>
+<line x1="1449" y1="1022" x2="1509" y2="1022" stroke="#334155" stroke-width="2.6" marker-end="url(#arr)"/>
+<text x="1459" y="1006" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="21" fill="#1f2937" text-anchor="start" font-weight="bold">p[7:0]</text>
+<line x1="46" y1="1110" x2="1514" y2="1110" stroke="#e5e7eb" stroke-width="1.2"/>
+<path d="M 77,1151 h 23 a 15,15 0 0 1 0,30 h -23 z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.4"/>
+<line x1="65" y1="1158" x2="77" y2="1158" stroke="#334155" stroke-width="2.0"/>
+<line x1="65" y1="1174" x2="77" y2="1174" stroke="#334155" stroke-width="2.0"/>
+<line x1="100" y1="1140" x2="100" y2="1151" stroke="#93a4bd" stroke-width="1.5"/>
+<text x="142" y="1174" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="25" fill="#111827" text-anchor="start" font-weight="normal">= partial-product AND:  pp i [j] = a_reg[j] · b_reg[i]    (16 gates)</text>
+<rect x="65" y="1190" width="70" height="52" rx="5" fill="#F0FDF4" stroke="#059669" stroke-width="2.4"/>
+<text x="100" y="1225" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#065f46" text-anchor="middle" font-weight="bold">FA</text>
+<text x="142" y="1224" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="25" fill="#111827" text-anchor="start" font-weight="normal">= full adder, rows 1–3 (12 adders): carry ripples right, sum drops to next row</text>
+<rect x="100" y="1264" width="50" height="52" rx="7" fill="#FFF7ED" stroke="#D97706" stroke-width="2.4"/>
+<text x="125.0" y="1290.0" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="26" fill="#7c2d12" text-anchor="middle" font-weight="bold"></text>
+<text x="166" y="1292" font-family="'DejaVu Sans', 'Noto Sans', sans-serif" font-size="25" fill="#111827" text-anchor="start" font-weight="normal">= DFF with async reset — 16 total:  a_reg(4) + b_reg(4) + p(8)</text>
+</svg>

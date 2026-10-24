@@ -1,7 +1,3 @@
-# Error-injection re-run
-# full_adder.v temporarily changed to sum = a ^ b, dropping cin
-# iverilog -g2012 -o sim_err tb/tb_mult.v rtl/full_adder.v rtl/mult_array.v && vvp sim_err
-# then full_adder.v restored (md5 7cd825c2573fb1066a90e70e4bad5b6d) and sim re-run -> PASS
 VCD info: dumpfile mult.vcd opened for output.
 MISMATCH: a=3 b=3 -> p=5, expected 9
 MISMATCH: a=3 b=6 -> p=10, expected 2

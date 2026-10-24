@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Block diagram of the 4x4 array multiplier (16 AND gates, 12 full adders,
-16 flip-flops). The font sizes are chosen for a figure about 450 pt wide.
+16 flip-flops). Fonts are sized so that in-figure labels remain clearly legible.
 
-The layout follows Section 2 of the assignment:
+Geometry mirrors Section 2 of the assignment exactly:
   * 8 product-bit columns (weight 2^k), 4 row bands
   * AND(row i, gate j) sits at column i+j   (16 partial-product gates)
   * FA (row i, adder j)  sits at column i+j (12 adders, rows 1..3)

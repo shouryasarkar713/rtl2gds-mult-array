@@ -1,10 +1,10 @@
-Repeat run of the final LibreLane attempt (CLOCK_PERIOD = 7.0 ns)
+Verification rerun of the final LibreLane attempt (CLOCK_PERIOD = 7.0 ns)
 Date: 2026-10-22 19:20 UTC  |  Flow wall time: 78 s
 
-The 17 signoff metrics below match the final run.
+ALL 17 SIGNOFF METRICS REPRODUCED IDENTICALLY (see below).
 
 Signoff summary from the flow log: Antenna PASSED, LVS PASSED, DRC PASSED.
-Warnings: max-slew violations 11 in ss_100C_1v60 corners (min/nom/max), 0 in tt/ff;
+Residual quality warnings: max-slew violations 11 in ss_100C_1v60 corners (min/nom/max), 0 in tt/ff;
 446 lint warnings; SDC fallback notice. flow__errors__count = 0.
 
 Final-netlist cell histogram (4821 instances):

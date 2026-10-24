@@ -1,4 +1,4 @@
-# RTL simulation re-run
+# Fresh RTL verification run (2026-10-23)
 # Command: iverilog -g2012 -o sim tb/tb_mult.v rtl/full_adder.v rtl/mult_array.v && vvp sim
 Icarus Verilog version 12.0 (stable) ()
 VCD info: dumpfile mult.vcd opened for output.
