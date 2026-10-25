@@ -2,7 +2,7 @@
 """KLayout headless screenshots of the mult_array GDS.
 
 Reproduces exactly what a user sees in the KLayout GUI (same engine, same
-SKY130A layer properties file), rendered with KLayout 0.30.7 in batch mode.
+SKY130A layer properties file), rendered with KLayout 0.30.12 in batch mode.
 
 Produces:
   1. mult_array_die.png  - whole 150 x 150 um die

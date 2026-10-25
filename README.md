@@ -41,7 +41,7 @@ rtl2gds-mult-array/
 │   └── mult_array.gds                  # Final signed-off GDSII layout stream
 ├── report/
 │   ├── report.typ                      # Editable Typst report source document
-│   └── report.pdf                      # Completed 11-page verified coursework report
+│   └── report.pdf                      # Completed 14-page verified coursework report
 ├── screenshots/
 │   ├── block_diagram.svg / .png        # Structural multiplier block diagram
 │   ├── waveform_example.png            # GTKWave simulation waveform (8 x 7 = 56, 2-cycle latency)
@@ -106,6 +106,20 @@ Run all commands from the repository root directory. The verified immutable cont
 IMAGE="docker.io/hpretl/iic-osic-tools@sha256:9201d2ebe74a406cf6af850ca2c646ac0462f3b2cea94cd98cb6580d8ceef800"
 ```
 
+### Phase 1: Environment Setup & Tool Verification
+
+```bash
+# Verify container runtime and tool suite availability
+podman run --rm --userns=keep-id $IMAGE --skip bash -c "
+  echo 'Tool Verification:'
+  iverilog -V | head -n 1
+  yosys -V
+  sta -version
+  klayout -v
+  librelane --version
+"
+```
+
 ### Phase 2: Part A — RTL Design & Verification
 
 ```bash
@@ -167,16 +181,17 @@ podman run --rm --userns=keep-id \
     sta sta/sta.tcl
 "
 # -> worst slack max 7.40 ns (WNS = +7.404 ns)
-# -> Tmin = 10.00 - 7.404 = 2.60 ns (2.596 ns), Fmax = 384.6 MHz (385.2 MHz)
+# -> Tmin = 10.00 - 7.404 = 2.596 ns (exact) / 2.60 ns (rounded)
+# -> Fmax = 385.2 MHz (exact) / 384.6 MHz (rounded)
 
-# Run 2: Confirmation run at T = Tmin = 2.60 ns
+# Run 2: Confirmation run at T = 2.60 ns
 podman run --rm --userns=keep-id \
   -v $(pwd):/foss/designs/mult_array:Z -w /foss/designs/mult_array \
   $IMAGE --skip bash -c "
     export PDK_ROOT=/foss/pdks; export PDK=sky130A; export STA_PERIOD=2.60
     sta sta/sta.tcl
 "
-# -> worst slack max 0.00 ns (confirmed Fmax limit)
+# -> worst slack max 0.00 ns (reported to 2 dec, exact slack +0.004 ns confirming limit)
 
 # Restore official T = 10.0 ns report into sta/mult_array_timing.rpt
 podman run --rm --userns=keep-id \
@@ -286,7 +301,7 @@ typst compile --root . report/report.typ report/report.pdf
 | **Part B: Gate-Level Sim**| PASS 256/0 | **PASS 256/0** | Verified Netlist Correctness |
 | **Part C: Target Period** | 10.0 ns (100 MHz) | **10.0 ns (100 MHz)** | Assignment Specification |
 | **Part C: Worst Slack** | +7.35 ns | **+7.404 ns** | OpenSTA 3.1.0 |
-| **Part C: $T_{\min}$ / $F_{\max}$** | 2.65 ns / 377.4 MHz | **2.60 ns / 384.6 MHz** | Confirmed at slack 0.00 ns |
+| **Part C: $T_{\min}$ / $F_{\max}$** | 2.65 ns / 377.4 MHz | **2.596 ns / 385.2 MHz** (2.60 ns / 384.6 MHz rounded) | Confirmed at slack +0.004 ns (0.00 ns) |
 | **Part C: Critical Path** | `a_reg[1]` $\to$ `p[6]` | **`b_reg[0]` (`_118_`) $\to$ `p[6]` (`_112_`)** | Traced from netlist |
 | **Part D: Target Period** | 7.0 ns | **7.0 ns** | Timing Closed |
 | **Part D: Runs Needed** | 8 runs | **8 runs** (3.5 to 7.0 ns ladder) | Verified Chronologically |
@@ -297,8 +312,8 @@ typst compile --root . report/report.typ report/report.pdf
 | **Part D: IR Drop** | N/A | **Macro Boundary Check Complete** (pad locations omitted) | Analysis Limitation |
 | **Part D: Worst Setup Slack**| +0.241 ns | **+0.364 ns** (`max_ss_100C_1v60`) | 0 Setup Violations |
 | **Part D: Hold Slack** | +0.14 ns | **+0.141 ns** | 0 Hold Violations |
-| **Part D: DRC Errors** | 0 errors | **0 errors** (Magic & KLayout) | Tapeout Ready |
-| **Part D: LVS Errors** | 0 errors | **0 errors** (Netgen) | Clean Match |
+| **Part D: DRC Errors** | 0 errors | **0 errors** (Magic & KLayout) | Zero DRC Errors |
+| **Part D: LVS Errors** | 0 errors | **0 errors** (Netgen) | Clean Match (Zero LVS Errors) |
 | **Part D: Post-Route $F_{\max}$**| 148.0 MHz (ss) / 282.7 MHz (tt) | **150.7 MHz (ss) / 302.9 MHz (tt)** | Formula $1000 / (T - \text{slack})$ |
 
 ---
