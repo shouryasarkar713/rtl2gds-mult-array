@@ -7,9 +7,9 @@
 [size] 1500 450
 [pos] -1 -1
 *-13.500000 2735000 2725000 2718000 2725000 2735000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[markername] AStimulus: a=8, b=7 (2718 ns)
-[markername] BCapture Edge 1: Operands (2725 ns)
-[markername] CCapture Edge 2: Product=56 (2735 ns)
+[markername] A
+[markername] B
+[markername] C
 [treeopen] tb_mult.
 [signals_width] 200
 [sst_width] 220

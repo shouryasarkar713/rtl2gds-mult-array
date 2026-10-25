@@ -210,27 +210,27 @@ tb/tb_mult.v:91: $finish called at 5138000 (1ps)
 Static timing analysis was conducted using OpenSTA 3.1.0 in `sta/sta.tcl` on the typical corner (`sky130_fd_sc_hd__tt_025C_1v80.lib`). Input external delays on $a, b, text("rst\\_n")$ and output external delays on $p$ were set to 1.0 ns relative to `clk`.
 
 == Timing Results Summary
-In Run 1 ($T = 10.0$ ns), the worst setup slack is $+7.404$ ns (reported as 7.40 ns), establishing:
-$ T_min = T - text("WNS") = 10.000 - 7.404 = 2.596 text(" ns") quad (text("rounded to ") 2.60 text(" ns")) $
-$ F_max = 1000 / T_min = 1000 / 2.596 = 385.2 text(" MHz") quad (text("or ") 384.6 text(" MHz at rounded ") 2.60 text(" ns")) $
-In Run 2 ($T = 2.60$ ns), OpenSTA reports `worst slack max 0.00`, reflecting the expected positive near-zero setup slack ($2.600 - 2.596 = +0.004$ ns, rounded to two decimal places by OpenSTA) and confirming maximum operating frequency.
+In Run 1 ($T = 10.0$ ns), OpenSTA reports worst negative setup slack of $+7.404$ ns (displayed as 7.40 ns in header summary), from which minimum clock period and maximum frequency are calculated to the precision shown:
+$ T_min = T - text("WNS") = 10.000 - 7.404 = 2.596 text(" ns") quad (text("evaluated as ") 2.60 text(" ns when rounded")) $
+$ F_max = 1000 / T_min = 1000 / 2.596 approx 385.2 text(" MHz") quad (text("or ") 384.6 text(" MHz at rounded ") 2.60 text(" ns")) $
+In Run 2 ($T = 2.60$ ns), OpenSTA outputs `worst slack max 0.00` to its 2-decimal display format. Based on $T = 2.600$ ns and the 3-decimal $T_min = 2.596$ ns, an inferred positive slack of $+0.004$ ns is expected, confirming timing closure at the maximum operating limit.
 
 #table(
   columns: (2.2fr, 1.8fr),
   fill: (col, row) => if row == 0 { rgb("#eff6ff") } else { none },
   stroke: 0.5pt + rgb("#cbd5e1"),
   [*Timing Metric (Part C)*], [*Measured Local Result*],
-  [Worst Setup Slack at $T = 10.0$ ns], [*+7.404 ns* (MET)],
-  [Minimum Clock Period ($T_min$)], [*2.596 ns* (exact) / *2.60 ns* (rounded)],
-  [Maximum Clock Frequency ($F_max$)], [*385.2 MHz* (exact) / *384.6 MHz* (rounded)],
-  [Setup Slack at $T = 2.60$ ns], [*+0.004 ns* (reported as `0.00 ns` to 2 dec)],
+  [Worst Setup Slack at $T = 10.0$ ns], [*+7.404 ns* (OpenSTA reported)],
+  [Minimum Clock Period ($T_min$)], [*2.596 ns* (from WNS) / *2.60 ns* (rounded)],
+  [Maximum Clock Frequency ($F_max$)], [*385.2 MHz* (from 2.596 ns) / *384.6 MHz* (from 2.60 ns)],
+  [Setup Slack at $T = 2.60$ ns], [*0.00 ns* (OpenSTA display; $+0.004$ ns inferred)],
   [Critical Path Startpoint], [`_118_` (`b_reg[0]` flip-flop, `dfrtp_1`)],
   [Critical Path Endpoint], [`_112_` (`p[6]` flip-flop, capturing `fa33.sum`)],
   [Total Cells on Critical Path], [*10 cells* (8 combinational gates + 2 flip-flops)],
   [Critical Path Data Arrival Time], [*2.460 ns* ($t_"cq" = 0.395$ ns + logic $= 2.065$ ns)],
-  [Data Required Time ($T = 10.0$ ns)], [*9.865 ns* ($10.000$ ns $- 0.135$ ns setup)],
-  [Sequential Latency ($2 times T_min$)], [*5.19 ns* (exact) / *5.20 ns* (rounded)],
-  [Throughput at $F_max$], [*385.2 M results/s* (exact) / *384.6 M results/s*]
+  [Data Required Time ($T = 10.0$ ns)], [*9.865 ns* ($10.000$ ns clock $- 0.135$ ns setup)],
+  [Sequential Latency ($2 times T_min$)], [*5.19 ns* (from 2.596 ns) / *5.20 ns* (rounded)],
+  [Throughput at $F_max$], [*385.2 M results/s* (exact-derived) / *384.6 M results/s*]
 )
 
 == Critical Path Cell-by-Cell Breakdown & Full-Adder Tracing
@@ -256,7 +256,8 @@ Traced directly from `sta/mult_array_timing.rpt` and verified against `synth/mul
 *Path Timing Reconciliation*:
 - *Data Arrival Time*: $0.395 text(" ns (clk-to-Q)") + 2.065 text(" ns (8 combinational gates)") = 2.460 text(" ns")$.
 - *Data Required Time*: $10.000 text(" ns (clock period)") - 0.135 text(" ns (library setup requirement)") = 9.865 text(" ns")$.
-- *Setup Slack*: $9.865 text(" ns") - 2.460 text(" ns") = +7.404 text(" ns")$ (MET).
+- *Reported Setup Slack*: *+7.404 ns* (MET).
+- *Display Rounding Note*: The displayed 3-decimal values subtract to $9.865 - 2.460 = 7.405$ ns. The 1 ps difference relative to the tool's reported slack of $+7.404$ ns is an artifact of OpenSTA independently rounding internal high-precision floating-point numbers for display.
 
 *Attribution to Full-Adder Network*:
 Netlist tracing reveals that cell `_083_` is an AND gate generating the partial-product bit $p p_0[0] = a_"reg"[0] and b_"reg"[0]$. The subsequent 7 combinational cells (`_055_`, `_059_`, `_070_`, `_076_`, `_090_`, `_091_`, `_092_`) implement the arithmetic accumulation network originally coded as 12 full adders. Because logic synthesis (Yosys and ABC) flattened the hierarchy and restructured the multi-level Boolean network using compound standard cells, a discrete one-to-one mapping from mapped library gates to individual RTL full-adder instances does not exist. However, netlist connectivity confirms that gate `_091_` implements a standard 3-input majority carry function (`maj3_1`), and gate `_092_` directly produces `\fa33.sum`—the final sum output of full adder `fa33` in row 3. Thus, exactly 7 of the 8 combinational gates originate from the synthesized full-adder network, while 1 gate performs partial-product generation.
@@ -313,7 +314,7 @@ At $T = 7.0$ ns, LibreLane successfully closed timing with non-negative slack ac
   [Max Slew Violations], [*0 violations* across all corners],
   [Post-Route $F_max$ (Worst ss Corner)], [*150.7 MHz* ($1000 / (7.0 - 0.364)$)],
   [Post-Route $F_max$ (Nominal tt Corner)], [*302.9 MHz* ($1000 / (7.0 - 3.699)$)],
-  [Pre-Route $F_max$ (Part C, tt)], [*385.2 MHz* (exact) / *384.6 MHz* (rounded)]
+  [Pre-Route $F_max$ (Part C, tt)], [*385.2 MHz* (from 2.596 ns) / *384.6 MHz* (rounded)]
 )
 
 == Physical Cell Breakdown (Netlist Histogram)
@@ -322,7 +323,7 @@ At $T = 7.0$ ns, LibreLane successfully closed timing with non-negative slack ac
   fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
   stroke: 0.5pt + rgb("#cbd5e1"),
   [*Cell Type (`sky130_fd_sc_hd__`)*], [*Count*], [*Physical Purpose in Layout*],
-  [`decap_12`, `6`, `3`, `8`, `4`], [1,314], [Decoupling capacitors: 905 `decap_12`, 175 `6`, 130 `3`, 55 `8`, 49 `4`],
+  [`decap_12`, `decap_6`, `decap_3`, `decap_8`, `decap_4`], [1,314], [Decoupling capacitors (mitigate dynamic IR drop): 905 `decap_12`, 175 `decap_6`, 130 `decap_3`, 55 `decap_8`, 49 `decap_4`],
   [`tapvpwrvgnd_1`], [245], [Well/substrate tap cells: prevent latch-up by biasing N-well and P-substrate],
   [`fill_1`, `fill_2`], [247], [Non-functional filler cells: 215 `fill_1` and 32 `fill_2` for DRC layer density],
   [`buf_2`, `clkdlybuf4s50_1`], [19], [Timing repair buffers: 17 `buf_2` and 2 `clkdlybuf4s50_1` for slew/setup],
@@ -375,7 +376,7 @@ During the physical-design flow, LibreLane and OpenROAD emitted several diagnost
 
 === 4. Generic Fallback SDC Files (`checksdcfiles`)
 - *Warning*: Stage 10 reported that `PNR_SDC_FILE` and `SIGNOFF_SDC_FILE` were not explicitly provided in `config.json`.
-- *Root Cause & Assessment*: LibreLane automatically generates fallback SDC constraints when custom SDC file paths are not specified. As prescribed by Section 9 of `RTL_to_GDS.pdf`, the flow configuration defines `CLOCK_PORT: clk` and `CLOCK_PERIOD: 7.0`. The generated fallback SDC correctly establishes a 7.0 ns clock period on `clk`, 5% clock uncertainty ($0.35$ ns), and $1.4$ ns input/output delays (20% of clock period), properly constraining the implementation.
+- *Root Cause & Assessment*: LibreLane automatically generates fallback SDC constraints when custom SDC file paths are not specified. As prescribed by Section 9 of `RTL_to_GDS.pdf`, the flow configuration defines `CLOCK_PORT: clk` and `CLOCK_PERIOD: 7.0`. The generated fallback SDC correctly establishes a 7.0 ns clock period on `clk`, 0.25 ns clock uncertainty, 5.0% timing derate, and 1.4 ns input/output delays (20% of clock period), properly constraining the implementation.
 
 === 5. Missing Power Source Locations (`VSRC_LOC_FILES`)
 - *Warning*: `[WARNING] [OpenROAD.IRDropReport] 'VSRC_LOC_FILES' was not given a value, which may make the results of IR drop analysis inaccurate. If you are not integrating a top-level chip for manufacture, you may ignore this warning...`
@@ -385,50 +386,50 @@ During the physical-design flow, LibreLane and OpenROAD emitted several diagnost
 
 = 6. Answers to the Report Questions
 
-#block(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
+#block(breakable: false, fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
 *Q1. The array needs 16 AND gates and 12 full adders. How many cells did synthesis produce for the logic (total cells minus flip-flops)? Explain why the number of cells is not simply $16 + 12$.*
 
-*Answer*: Synthesis produced 73 total cells, of which 16 are flip-flops, leaving *57 combinational logic cells* ($805.77 - 400.38 = 405.39 mu m^2$). The count is not $16 + 12 = 28$ because those numbers represent the architecture's 16 AND-gate operations and 12 full-adder arithmetic functions, not discrete library standard cells. In a standard-cell library, a 1-bit full adder is not a single gate, but an arithmetic subcircuit requiring sum and carry functions (typically 5--9 basic gates or 2--3 compound gates). Yosys and ABC flatten the hierarchy and restructure the multi-level Boolean network: constant propagation recognizes that row carry-ins are grounded ($c_1 [0] = c_2 [0] = c_3 [0] = 0$), collapsing the first adder in each row to a simpler half adder; carry networks are mapped into compound majority gates (`maj3_1`); and partial-product AND operations are folded into complex cells (`a21oi`, `o21ai`, `a22oi`). Consequently, the 57 cells represent technology-mapped CMOS gates rather than high-level arithmetic blocks.
+*Answer*: Synthesis produced 73 total cells, of which 16 are flip-flops, leaving *57 combinational logic cells* ($405.39 mu m^2$). The count is not $16 + 12 = 28$ because those numbers represent architectural operations (16 AND products and 12 full adders) rather than standard-cell primitives. A 1-bit full adder is not a single gate, but requires sum and carry functions (typically 5--9 basic gates or 2--3 complex gates). Yosys and ABC flatten the hierarchy and optimize the Boolean network: constant propagation recognizes grounded carry-ins ($c_{1,2,3}[0] = 0$), collapsing the first adder in each row to a half adder; carry networks map into compound majority gates (`maj3_1`); and partial-product ANDs fold into complex cells (`a21oi`, `o21ai`). Thus, the 57 cells represent technology-mapped CMOS gates.
 ]
 
-#v(0.8em)
+#v(0.6em)
 
-#block(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
+#block(breakable: false, fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
 *Q2. What is the critical path of your design, from which register to which register? How many cells are on it, and how does this compare with the estimate of about $2N$ full-adder delays?*
 
-*Answer*: Traced directly from `sta/mult_array_timing.rpt`, the critical path originates at launch flip-flop `_118_` (`b_reg[0]`, clock-to-Q delay 0.395 ns) and terminates at capture flip-flop `_112_` (`p[6]`, capturing `\fa33.sum`), traversing *10 cells in total*: 1 launch flip-flop (`dfrtp_1`), 8 combinational CMOS gates (`_083_`, `_055_`, `_059_`, `_070_`, `_076_`, `_090_`, `_091_`, `_092_`), and 1 capture flip-flop (`dfrtp_1`). The combinational gates contribute 2.065 ns across 1 partial-product AND gate (`_083_`) and 7 flattened adder-network gates, reaching a data arrival time of 2.460 ns (which meets the 9.865 ns required time after 0.135 ns library setup, yielding +7.404 ns slack at 10 ns). While the theoretical rule-of-thumb predicts about $2N = 8$ full-adder delays ($t_"crit" approx 8 t_"FA"$) for an unoptimized ripple-carry array ($approx 16$ unmapped gate levels), full-adder delay units are not interchangeable with mapped gate arcs. Logic synthesis and Boolean restructuring collapsed the array across row boundaries into 8 optimized CMOS compound gate arcs averaging 0.258 ns per arc, achieving an exact minimum period $T_"min" = 2.596$ ns ($F_"max" = 385.2$ MHz, or 384.6 MHz at rounded 2.60 ns).
+*Answer*: The critical path originates at launch flip-flop `_118_` (`b_reg[0]`, clock-to-Q 0.395 ns) and terminates at capture flip-flop `_112_` (`p[6]`, capturing `\fa33.sum`), traversing *10 cells in total* (1 launch flip-flop, 8 combinational gates, and 1 capture flip-flop). Combinational cells contribute 2.065 ns across 1 partial-product AND gate (`_083_`) and 7 flattened adder-network gates (`_055_`, `_059_`, `_070_`, `_076_`, `_090_`, `_091_`, `_092_`), reaching a data arrival time of 2.460 ns (meeting the 9.865 ns required time with +7.404 ns setup slack at 10 ns). While the $2N = 8$ full-adder delay model ($t_"crit" approx 8 t_"FA"$) estimates an unoptimized ripple-carry array ($approx 16$ unmapped gate levels), full-adder delay units are not interchangeable with mapped gate arcs. Logic synthesis collapsed the array across row boundaries into 8 optimized CMOS compound gate arcs averaging 0.258 ns per arc, achieving $T_"min" = 2.596$ ns ($F_"max" approx 385.2$ MHz, or 384.6 MHz at rounded 2.60 ns).
 ]
 
-#v(0.8em)
+#v(0.6em)
 
-#block(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
+#block(breakable: false, fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
 *Q3. What percentage of the total cell area is flip-flops? Why is this percentage large for such a small design?*
 
-*Answer*: The 16 flip-flops (`sky130_fd_sc_hd__dfrtp_1`) occupy $400.384 mu m^2$ out of the total $805.773 mu m^2$, accounting for *49.69%* (nearly half) of total cell area. This high proportion occurs because a standard-cell D-type flip-flop with asynchronous reset is physically large ($25.024 mu m^2$, equivalent to 6--7 basic NAND2 gates) as it comprises master-slave latch stages, transmission gates, reset gating, and internal clock inverters. Meanwhile, the combinational core of a 4-bit multiplier is small ($approx 405 mu m^2$) and optimizes efficiently. In larger datapath architectures (e.g., 32-bit or 64-bit multipliers), combinational area grows quadratically ($O(N^2)$) while register count grows linearly ($O(N)$), causing sequential area percentage to drop. In a 4-bit array multiplier, the fixed overhead of registers naturally dominates.
+*Answer*: The 16 flip-flops (`sky130_fd_sc_hd__dfrtp_1`) occupy $400.384 mu m^2$ out of $805.773 mu m^2$, accounting for *49.69%* of total cell area. This high proportion occurs because a standard-cell DFF with asynchronous reset is physically large ($25.024 mu m^2$, equivalent to 6--7 basic NAND2 gates) comprising master-slave latches, reset gating, and clock buffers, whereas the 4-bit combinational core is small ($approx 405 mu m^2$). In larger multipliers, combinational logic grows quadratically ($O(N^2)$) while registers grow linearly ($O(N)$), but for $N=4$ register overhead naturally dominates.
 ]
 
-#v(0.8em)
+#v(0.6em)
 
-#block(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
+#block(breakable: false, fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
 *Q4. Why is the post-route $F_max$ lower than the $F_max$ from Part C? Which kinds of cells did the flow add, and why is each kind needed?*
 
-*Answer*: Post-route $F_"max"$ drops from the pre-route typical-corner estimate of 385.2 MHz (384.6 MHz rounded) to 150.7 MHz in the signoff worst slow-slow corner ($100^compose C, 1.60$ V) and 302.9 MHz in the nominal typical corner due to physical interconnect RC parasitics, clock tree insertion delay, clock skew ($approx 0.28$ ns), clock uncertainty ($0.25$ ns), and multi-corner PVT derating. To achieve physical manufacturability, electrical integrity, and timing closure, LibreLane inserted 1,828 physical-support cells (net increase of 1,822 instances after 6 functional cells were merged during physical optimization, yielding 1,895 total placed instances): 245 tap cells (`tapvpwrvgnd_1`) to tie substrate/wells and prevent CMOS latch-up; 1,314 decoupling capacitor cells (`decap_12`, `decap_6`, `decap_3`, `decap_8`, `decap_4`) to suppress power-supply noise and dynamic IR drop; 247 filler cells (`fill_1`, `fill_2`) to satisfy foundry metal/poly density rules for CMP planarity; 3 clock tree buffers (`clkbuf_16`) to distribute a balanced low-skew clock network; and 19 timing-repair buffers (17 `buf_2` and 2 `clkdlybuf4s50_1`) to fix slew violations and resolve setup/hold constraints across corners.
+*Answer*: Post-route $F_"max"$ drops from the pre-route typical-corner estimate of 385.2 MHz (384.6 MHz rounded) to 150.7 MHz in the signoff worst slow-slow corner ($100^compose C, 1.60$ V) and 302.9 MHz in the nominal typical corner due to interconnect RC parasitics, clock tree insertion delay, clock skew ($approx 0.28$ ns), clock uncertainty ($0.25$ ns), and multi-corner PVT derating. To achieve manufacturability and electrical closure, LibreLane inserted 1,828 physical-support cells (net increase of 1,822 instances after 6 functional cells were merged, yielding 1,895 total placed instances): 245 tap cells (`tapvpwrvgnd_1`) to prevent latch-up; 1,314 decoupling capacitor cells (`decap_12`, `decap_6`, `decap_3`, `decap_8`, `decap_4`) to suppress power-supply noise and dynamic IR drop; 247 filler cells (`fill_1`, `fill_2`) to satisfy foundry DRC density rules; 3 clock tree buffers (`clkbuf_16`) to distribute a low-skew clock; and 19 timing-repair buffers (17 `buf_2` and 2 `clkdlybuf4s50_1`) to resolve slew and setup/hold constraints.
 ]
 
-#v(0.8em)
+#v(0.6em)
 
-#block(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
+#block(breakable: false, fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
 *Q5. What does a DRC check verify, and what does an LVS check verify? Why must both pass before a chip can be manufactured?*
 
-*Answer*: Design Rule Checking (DRC) validates physical layout geometries against foundry manufacturing limits (minimum wire width, spacing, enclosure, overlap, and density rules) to ensure lithographic and etching integrity. Layout Versus Schematic (LVS) extracts the electrical circuit (MOS transistors, diodes, passive devices, and nets) directly from the mask polygons and verifies topological equivalence against the synthesized gate netlist. Both checks are essential and complementary: DRC ensures physical manufacturability but cannot detect functional circuit errors (e.g., an unintended short between two signal nets that satisfies geometric spacing will pass DRC); LVS guarantees schematic correctness but cannot prevent physical defects if geometries violate process tolerances. A chip tapeout requires zero DRC and zero LVS errors.
+*Answer*: Design Rule Checking (DRC) validates physical layout geometries against foundry manufacturing rules (widths, spacings, enclosures, and densities) to ensure lithographic integrity. Layout Versus Schematic (LVS) extracts devices and connectivity directly from mask polygons and verifies topological equivalence against the synthesized gate netlist. Both must pass: DRC ensures manufacturability but cannot detect functional circuit errors (e.g. an unintended short satisfying geometric spacing); LVS guarantees schematic correctness but cannot prevent physical fabrication defects if design rules are violated. Chip tapeout requires zero DRC and zero LVS errors.
 ]
 
-#v(0.8em)
+#v(0.6em)
 
-#block(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
+#block(breakable: false, fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#cbd5e1"), inset: 10pt, radius: 4pt)[
 *Q6. Using the formulas in Section 2, estimate how the number of full adders and the critical path delay would change if the multiplier were 8 bits wide instead of 4. Show your working.*
 
-*Answer*: For an $N$-bit array multiplier, the number of full adders scales quadratically as $N_"FA" = N(N - 1)$, increasing from $4 times 3 = 12$ full adders for $N = 4$ to $8 times 7 =$ *56 full adders* for $N = 8$ ($4.67times$ increase). The critical path depth scales with the ripple-carry chain as approximately $2N$ full-adder delay units, doubling from 8 units for $N = 4$ to 16 units for $N = 8$. Scaling the measured 4-bit minimum period by a factor of 2 yields a theoretical linear estimate of $T_"min" (text("8-bit")) approx 2 times 2.596 text(" ns") = 5.192 text(" ns")$ ($F_"max" approx 192.6 text(" MHz")$) using the exact 4-bit baseline, or $T_"min" (text("8-bit")) approx 2 times 2.60 text(" ns") = 5.20 text(" ns")$ ($F_"max" approx 192.3 text(" MHz")$) using the rounded baseline. This first-order analytical extrapolation assumes ideal scaling; actual 8-bit place-and-route would incur additional routing congestion and wire delays, while sequential register overhead would grow from 16 to 32 flip-flops ($8+8+16$), maintaining 2-cycle latency ($approx 10.4$ ns) and 1 result per cycle throughput.
+*Answer*: For an $N$-bit array multiplier, full adders scale as $N_"FA" = N(N - 1)$, increasing from $4 times 3 = 12$ for $N=4$ to $8 times 7 = 56$ *full adders* for $N=8$ ($4.67times$ increase). The critical path depth scales with the ripple chain as approximately $2N$ full-adder delays, doubling from 8 to 16 units. Scaling the measured 4-bit period by a factor of 2 gives a theoretical linear estimate of $T_"min" (text("8-bit")) approx 2 times 2.596 text(" ns") = 5.192 text(" ns")$ ($F_"max" approx 192.6 text(" MHz")$) using the 2.596 ns baseline, or $2 times 2.60 text(" ns") = 5.20 text(" ns")$ ($F_"max" approx 192.3 text(" MHz")$) using the rounded baseline. Registers grow from 16 to 32 flip-flops ($8+8+16$), maintaining 2-cycle latency ($approx 10.4$ ns) and 1 result/cycle throughput.
 ]
 
 #pagebreak()
@@ -439,11 +440,11 @@ During the physical-design flow, LibreLane and OpenROAD emitted several diagnost
 The complete RTL-to-GDSII flow was designed, simulated, synthesized, timed, and placed-and-routed to signoff using the containerized `hpretl/iic-osic-tools` environment:
 - *Part A*: Structural RTL and testbench verified across all 256 stimulus vectors; error injection correctly caught with 95 mismatches.
 - *Part B*: Logic synthesis completed with Yosys 0.70; mapped to 73 SKY130 cells ($805.77 mu m^2$); gate-level simulation passed 256/256 vectors.
-- *Part C*: Static timing analysis in OpenSTA 3.1.0 established $T_min = 2.596$ ns ($F_max = 385.2$ MHz exact, or 384.6 MHz at rounded 2.60 ns) with near-zero slack (+0.004 ns, reported as 0.00 ns) confirmed at $T = 2.60$ ns.
+- *Part C*: Static timing analysis in OpenSTA 3.1.0 established $T_min = 2.596$ ns ($F_max approx 385.2$ MHz, or 384.6 MHz at rounded 2.60 ns) with near-zero slack (+0.004 ns inferred, reported as 0.00 ns) confirmed at $T = 2.60$ ns.
 - *Part D*: LibreLane physical design achieved timing closure across all 9 signoff corners at $T = 7.0$ ns on a fixed $150 times 150 mu m$ die, with 0 DRC errors (Magic & KLayout), 0 LVS errors (Netgen), 0 antenna violations, and non-negative setup slack ($+0.364$ ns in worst-case corner `max_ss_100C_1v60`). Wirelength checking was skipped without threshold parameter, and IR-drop analysis was limited to macro boundary approximation without package bump locations.
 
 == Academic Integrity Declaration
-In accordance with Section 13 of "RTL_to_GDS.pdf", the authors confirm that all RTL code, testbenches, synthesis and STA scripts, physical-design configurations, and documentation presented herein were developed and verified by the team.
+In accordance with Section 13 of "RTL_to_GDS.pdf", the authors confirm that the design, verification, synthesis, static timing analysis, and physical-design workflows were executed, audited, and verified locally by the team members. Standard open-source EDA tools from the IIC-OSIC-TOOLS environment were utilized as prescribed.
 
 #v(1em)
 
@@ -451,6 +452,7 @@ In accordance with Section 13 of "RTL_to_GDS.pdf", the authors confirm that all 
 
 The complete set of commands executed locally, in chronological order:
 
+#text(size: 8.5pt)[
 ```bash
 # ==============================================================================
 # Phase 1: Environment Preflight & Toolchain Verification
@@ -541,3 +543,4 @@ podman run --rm --userns=keep-id \
     QT_QPA_PLATFORM=offscreen klayout -b -r scripts/klayout_shots.py
 "
 ```
+]

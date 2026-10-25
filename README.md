@@ -87,7 +87,7 @@ All verification, synthesis, STA, and physical-design workflows were executed lo
   - **Local Image ID**: `fd31cb46f41bea25c60bcdff1a8106f9e3889b3f05260af80c75a8b625a1c1db`
 - **PDK**: SkyWater 130 nm (`sky130A`), standard cell library `sky130_fd_sc_hd` (`$PDK_ROOT=/foss/pdks`)
 - **Local EDA Tool Versions (Observed Locally in Container)**:
-  - **Icarus Verilog**: v13.0 / v14.0 (devel)
+  - **Icarus Verilog**: v14.0 (devel) (git sha 15d870a5, containerized)
   - **Yosys**: 0.70 (git sha1 `28ba3cb92`, Release, GNU /usr/bin/c++ 13.3.0)
   - **OpenSTA**: 3.1.0 (`80fbbb2945`)
   - **LibreLane**: v3.1.0.dev3 (`Classic` flow, 80 stages, adapted from OpenLane 2.0)
@@ -140,9 +140,18 @@ git checkout rtl/full_adder.v
 iverilog -g2012 -o sim tb/tb_mult.v rtl/full_adder.v rtl/mult_array.v && vvp sim
 # -> PASS: 256 vectors checked, 0 errors
 
-# 4. Waveform & block diagram generation
-python3 scripts/make_gtkwave_screenshot.py # Generates screenshots/waveform_example.png from GTKWave capture
-python3 scripts/block_diagram.py           # Generates screenshots/block_diagram.svg & .png
+# 4. Waveform capture with GTKWave under virtual X11 display (Xvfb + xfwm4 + xwd):
+podman run --rm --userns=keep-id \
+  -v $(pwd):/foss/designs/mult_array:Z -w /foss/designs/mult_array \
+  $IMAGE --skip bash -c "
+    Xvfb :99 -screen 0 1550x550x24 & export DISPLAY=:99; sleep 1
+    xfwm4 & sleep 1
+    gtkwave mult.vcd mult_example.gtkw & sleep 3
+    xwd -name 'GTKWave - mult.vcd' -out gtkwave_raw.xwd
+"
+convert gtkwave_raw.xwd screenshots/gtkwave_raw.png && rm gtkwave_raw.xwd
+python3 scripts/make_gtkwave_screenshot.py  # Annotates callouts in bottom blank space -> screenshots/waveform_example.png
+python3 scripts/block_diagram.py            # Generates screenshots/block_diagram.svg & .png
 ```
 
 ### Phase 3: Part B — Logic Synthesis with Yosys
@@ -181,8 +190,8 @@ podman run --rm --userns=keep-id \
     sta sta/sta.tcl
 "
 # -> worst slack max 7.40 ns (WNS = +7.404 ns)
-# -> Tmin = 10.00 - 7.404 = 2.596 ns (exact) / 2.60 ns (rounded)
-# -> Fmax = 385.2 MHz (exact) / 384.6 MHz (rounded)
+# -> Tmin = 10.00 - 7.404 = 2.596 ns (calculated from WNS to 3 decimals) / 2.60 ns (rounded)
+# -> Fmax = 385.2 MHz (calculated from WNS) / 384.6 MHz (rounded)
 
 # Run 2: Confirmation run at T = 2.60 ns
 podman run --rm --userns=keep-id \
@@ -191,7 +200,7 @@ podman run --rm --userns=keep-id \
     export PDK_ROOT=/foss/pdks; export PDK=sky130A; export STA_PERIOD=2.60
     sta sta/sta.tcl
 "
-# -> worst slack max 0.00 ns (reported to 2 dec, exact slack +0.004 ns confirming limit)
+# -> worst slack max 0.00 ns (reported to 2 dec, slack +0.004 ns inferred from T - Tmin confirming limit)
 
 # Restore official T = 10.0 ns report into sta/mult_array_timing.rpt
 podman run --rm --userns=keep-id \
@@ -241,7 +250,7 @@ podman run --rm --userns=keep-id \
 cp pnr/runs/RUN_2026-10-23_20-08-02/final/metrics.json pnr/metrics.json
 cp pnr/runs/RUN_2026-10-23_20-08-02/final/gds/mult_array.gds pnr/mult_array.gds
 
-# Render high-resolution KLayout screenshots headlessly:
+# Render high-resolution KLayout layout views headlessly:
 podman run --rm --userns=keep-id \
   -v $(pwd):/foss/designs/mult_array:Z -w /foss/designs/mult_array \
   $IMAGE --skip bash -c "
@@ -250,6 +259,8 @@ podman run --rm --userns=keep-id \
 "
 # -> screenshots/mult_array_die.png (1800x1800)
 # -> screenshots/mult_array_zoom.png (1600x1600)
+# Note: Layout images are generated headlessly via KLayout's Python API (pya.LayoutView)
+# loaded with sky130A.lyp layer properties, rather than interactive window captures.
 ```
 
 #### Flow Warnings Investigation & Diagnostics
@@ -274,7 +285,7 @@ During physical design execution, LibreLane and OpenROAD emitted several diagnos
 4. **Generic Fallback SDC Files (`checksdcfiles`)**:
    - Stage 10 reported `PNR_SDC_FILE` and `SIGNOFF_SDC_FILE` were not explicitly provided in `config.json`.
    - Root cause: LibreLane automatically generates fallback SDC constraints when custom SDC file paths are omitted.
-   - Risk & assessment: As prescribed by Section 9 of `RTL_to_GDS.pdf`, configuration specifies `CLOCK_PORT: clk` and `CLOCK_PERIOD: 7.0`. The generated fallback SDC correctly establishes a 7.0 ns clock period on `clk`, 5% clock uncertainty ($0.35$ ns), and $1.4$ ns input/output delays (20% of clock period), properly constraining the implementation.
+   - Risk & assessment: As prescribed by Section 9 of `RTL_to_GDS.pdf`, configuration specifies `CLOCK_PORT: clk` and `CLOCK_PERIOD: 7.0`. The generated fallback SDC correctly establishes a 7.0 ns clock period on `clk`, 0.25 ns clock uncertainty, 5.0% timing derate, and $1.4$ ns input/output delays (20% of clock period), properly constraining the implementation.
 5. **Missing Power Source Locations (`VSRC_LOC_FILES`)**:
    - `[WARNING] [OpenROAD.IRDropReport] 'VSRC_LOC_FILES' was not given a value, which may make the results of IR drop analysis inaccurate...`
    - Root cause: `VSRC_LOC_FILES` specifies the exact coordinates and voltages of power pad bumps for full-chip package integration, omitted for standalone macro blocks.
@@ -320,7 +331,7 @@ typst compile --root . report/report.typ report/report.pdf
 
 ## 6. Academic Integrity Statement & Provenance
 
-We declare that the work presented in this repository represents our genuine coursework effort. The Git commit history reflects development progress, milestone tags, and verification runs. Every result, waveform, layout screenshot, and metric reported in this repository was executed and verified against the assignment specification `RTL_to_GDS.pdf`.
+We declare that the work presented in this repository represents our genuine coursework effort. The Git commit history reflects development progress, milestone tags, and verification runs. Every result, waveform, layout screenshot, and metric reported in this repository was executed, audited, and verified locally by the team members against the assignment specification `RTL_to_GDS.pdf` using standard open-source EDA tools from the IIC-OSIC-TOOLS environment.
 
 - **Baseline Exploration Logs**: Earlier run logs generated during initial exploration on October 22 are archived under `logs/baseline_historical_oct22/` with an accompanying README.
 - **Git Commit History Preservation**: In addition to standard packaging, the complete Git commit history is preserved and exported as a Git bundle (`rtl2gds-mult-array.bundle`) containing all commit objects, trees, and tags.
