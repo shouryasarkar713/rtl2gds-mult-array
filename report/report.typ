@@ -30,6 +30,7 @@
 
 #set text(font: ("Liberation Sans", "DejaVu Sans", "Arial"), size: 10pt)
 #set par(justify: true, leading: 0.65em)
+#show link: set text(fill: rgb("#2563eb"))
 #show heading: set text(fill: rgb("#111827"), weight: "bold")
 #show heading.where(level: 1): it => block(spacing: 1.5em)[
   #text(15pt, fill: rgb("#1e3a8a"))[#it.body]
@@ -51,9 +52,9 @@
   #text(20pt, weight: "bold", fill: rgb("#0f172a"))[4-Bit Array Multiplier: RTL to GDSII]\
   #v(0.2em)
   #text(11pt, fill: rgb("#64748b"))[SkyWater SKY130 High-Density CMOS Technology (`sky130_fd_sc_hd`)]\
-  #v(1em)
+  #v(0.8em)
 
-  #rect(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#e2e8f0"), radius: 6pt, inset: 12pt, width: 100%)[
+  #rect(fill: rgb("#f8fafc"), stroke: 0.5pt + rgb("#e2e8f0"), radius: 6pt, inset: 11pt, width: 100%)[
     #grid(
       columns: (1fr, 1fr),
       align(left)[
@@ -70,10 +71,19 @@
         Multiplier: $B =$ *7* ($0111_2$) $arrow.r$ Product: $P =$ *56* (0x38)]
       ]
     )
+    #v(0.5em)
+    #line(length: 100%, stroke: 0.5pt + rgb("#e2e8f0"))
+    #v(0.35em)
+    #grid(
+      columns: (auto, 1fr),
+      gutter: 6pt,
+      align(left + horizon)[#text(9pt, weight: "bold", fill: rgb("#475569"))[GitHub Repository:]],
+      align(left + horizon)[#text(9pt)[#link("https://github.com/shouryasarkar713/rtl2gds-mult-array")]]
+    )
   ]
 ]
 
-#v(0.8em)
+#v(0.6em)
 
 = 1. Executive Summary & Flow Overview
 
