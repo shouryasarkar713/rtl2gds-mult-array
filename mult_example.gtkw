@@ -1,0 +1,29 @@
+[*]
+[*] GTKWave Analyzer
+[*]
+[dumpfile] "mult.vcd"
+[savefile] "mult_example.gtkw"
+[timestart] 2698000
+[size] 1500 450
+[pos] -1 -1
+*-13.500000 2735000 2725000 2718000 2725000 2735000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[markername] AStimulus: a=8, b=7 (2718 ns)
+[markername] BCapture Edge 1: Operands (2725 ns)
+[markername] CCapture Edge 2: Product=56 (2735 ns)
+[treeopen] tb_mult.
+[signals_width] 200
+[sst_width] 220
+[signals_width] 200
+[sst_expanded] 1
+[sst_vpaned_height] 250
+@28
+tb_mult.clk
+tb_mult.rst_n
+@24
+tb_mult.a[3:0]
+tb_mult.b[3:0]
+tb_mult.p[7:0]
+@22
+tb_mult.p[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

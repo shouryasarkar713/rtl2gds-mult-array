@@ -158,7 +158,7 @@ Using Member 1's Roll Number (`2023112013`):
 
 #align(center)[
   #image("../screenshots/waveform_example.png", width: 95%)
-  #text(8.5pt, fill: rgb("#4b5563"))[*Figure 2*: RTL Waveform showing 2-cycle latency for $8 times 7 = 56$ ($t=2718$ ns stimulus, $2725$ ns capture 1, $2735$ ns capture 2).]
+  #text(8.5pt, fill: rgb("#4b5563"))[*Figure 2*: GTKWave simulation waveform for worked example $8 times 7 = 56$ (hex 0x38), displaying `clk`, `rst_n`, `a`, `b`, and `p`. Markers indicate stimulus application ($t=2718$ ns), capture edge 1 ($t=2725$ ns), and capture edge 2 ($t=2735$ ns) demonstrating the 2-cycle registered pipeline latency.]
 ]
 
 #pagebreak()

@@ -44,12 +44,13 @@ rtl2gds-mult-array/
 │   └── report.pdf                      # Completed 11-page verified coursework report
 ├── screenshots/
 │   ├── block_diagram.svg / .png        # Structural multiplier block diagram
-│   ├── waveform_example.png            # RTL simulation waveform (8 x 7 = 56, 2-cycle latency)
+│   ├── waveform_example.png            # GTKWave simulation waveform (8 x 7 = 56, 2-cycle latency)
 │   ├── mult_array_die.png              # KLayout full die layout view (150 x 150 um)
 │   └── mult_array_zoom.png             # KLayout zoomed core layout view (40 x 40 um)
 ├── scripts/
 │   ├── block_diagram.py                # Generates Figure 1 SVG and PNG
-│   ├── render_waveform.py              # Generates Figure 2 PNG from fresh mult.vcd
+│   ├── make_gtkwave_screenshot.py      # Annotates genuine GTKWave capture to generate Figure 2
+│   ├── render_waveform.py              # Wrapper executing make_gtkwave_screenshot.py
 │   └── klayout_shots.py                # Headless batch KLayout renderer for Figures 3 & 4
 ├── logs/                               # Tool execution transcripts
 │   ├── partA_sim_pass.log              # Part A: clean 256-vector PASS
@@ -69,7 +70,8 @@ rtl2gds-mult-array/
 │   ├── partD_run_7.0.log               # Part D Ladder: Run 8 (T = 7.0 ns, ss slack = +0.364 ns, PASS ✅)
 │   ├── klayout_render.log              # Headless KLayout rendering log
 │   └── baseline_historical_oct22/      # Earlier baseline run logs (October 22)
-└── mult.vcd                            # Fresh VCD waveform dump from passing RTL simulation
+├── mult.vcd                            # Fresh VCD waveform dump from passing RTL simulation
+└── mult_example.gtkw                   # GTKWave savefile configured with signals and latency markers
 ```
 
 ---
@@ -125,8 +127,8 @@ iverilog -g2012 -o sim tb/tb_mult.v rtl/full_adder.v rtl/mult_array.v && vvp sim
 # -> PASS: 256 vectors checked, 0 errors
 
 # 4. Waveform & block diagram generation
-python3 scripts/render_waveform.py     # Generates screenshots/waveform_example.png from mult.vcd
-python3 scripts/block_diagram.py       # Generates screenshots/block_diagram.svg & .png
+python3 scripts/make_gtkwave_screenshot.py # Generates screenshots/waveform_example.png from GTKWave capture
+python3 scripts/block_diagram.py           # Generates screenshots/block_diagram.svg & .png
 ```
 
 ### Phase 3: Part B — Logic Synthesis with Yosys
