@@ -1,4 +1,4 @@
-#set document(title: [4-Bit Array Multiplier from RTL to GDSII], author: ("Shourya Sarkar", "guru shwadeep"))
+#set document(title: [4-Bit Array Multiplier from RTL to GDSII], author: ("Shourya Sarkar", "Sampath"))
 #set page(
   paper: "a4",
   margin: (top: 2.2cm, bottom: 2.2cm, left: 2.2cm, right: 2.2cm),
@@ -8,7 +8,7 @@
         #grid(
           columns: (1fr, 1fr),
           align(left)[*Digital VLSI Design* · 4-Bit Array Multiplier],
-          align(right)[Shourya Sarkar (2023112013) · guru shwadeep (2023112020)]
+          align(right)[Shourya Sarkar (2023112013) · Sampath (2023102033)]
         )
         #v(-0.3em)
         #line(length: 100%, stroke: 0.5pt + rgb("#e5e7eb"))
@@ -64,8 +64,8 @@
         Roll No. `2023112013`
       ],
       align(center)[
-        *guru shwadeep*\
-        Roll No. `2023112020`
+        *Sampath*\
+        Roll No. `2023102033`
       ]
     )
     #v(0.8em)

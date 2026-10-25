@@ -9,7 +9,7 @@ Digital VLSI Design Coursework — an unsigned 4-bit × 4-bit array multiplier d
 | Team Member | Name | Roll Number | Role |
 |---|---|---|---|
 | Member 1 | **Shourya Sarkar** | `2023112013` | RTL Design, Verification, Synthesis, STA & Report |
-| Member 2 | **guru shwadeep** | `2023112020` | Physical Design, PnR Ladder & Layout Signoff |
+| Member 2 | **Sampath** | `2023102033` | Physical Design, PnR Ladder & Layout Signoff |
 
 ### Worked Example Parameter Assignment
 - Multiplicand $A = (\text{Last digit of Member 1 Roll No. } 2023112013) + 5 = 3 + 5 = \mathbf{8}\ (1000_2)$
